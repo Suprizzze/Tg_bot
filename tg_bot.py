@@ -1,12 +1,9 @@
 import telebot
 import requests
 import random
-import json
-# from urllib import parse, request
 from telebot import types
 
-
-answer = ["Все хорошо", "да отлично", "Превосходно", "пойдет, у тебя как?","нормально, спасибо"]
+answer = ["Все хорошо", "да отлично", "Превосходно", "пойдет, у тебя как?", "нормально, спасибо"]
 answer1 = ["ничего нового", "все новое", "да ничего, а у тебя что нового ?",
            "много чего, но тебе не скажу", "извини, я без настроения"]
 answer2 = ["Вуау, красотка", "ммм как будто дьявол смотрит прямо в душу, ужас!", "на тебя похож!",
@@ -44,26 +41,47 @@ def start_answer(message):
     if "привет" in mess_text:
         mess = f"Привет, {message.from_user.first_name} джан"
         bot.send_message(message.chat.id, mess, parse_mode="html")
-    elif "дела" in mess_text or "как ты" in mess_text:
+
+
+def how_are(message):
+    mess_text = message.text.lower()
+    if "дела" in mess_text or "как ты" in mess_text:
         mess = f"{random.choice(answer)}, {message.from_user.first_name}"
         bot.send_message(message.chat.id, mess, parse_mode="html")
-    elif "что нового" in mess_text:
+
+
+def what_new(message):
+    mess_text = message.text.lower()
+    if "что нового" in mess_text:
         mess = f"{random.choice(answer1)}, {message.from_user.first_name}"
         bot.send_message(message.chat.id, mess, parse_mode="html")
-    elif "?" in mess_text:
+
+
+def gif(message):
+    mess_text = message.text.lower()
+    if "?" in mess_text:
         response = requests.get("https://yesno.wtf/api")
         pic = response.json()
         mess = pic["image"]
-        bot.send_message(message.chat.id, mess,parse_mode="html")
-    elif "шутка" in mess_text:
+        bot.send_message(message.chat.id, mess, parse_mode="html")
+
+
+def joke(message):
+    mess_text = message.text.lower()
+    if "шутка" in mess_text:
         response = requests.get("http://rzhunemogu.ru/RandJSON.aspx?CType=11")
         p = response.text
         mess = p[12:-2]
         bot.send_message(message.chat.id, mess, parse_mode="html")
-    elif "рандом" in mess_text:
+
+
+def random_gif(message):
+    mess_text = message.text.lower()
+    if "рандом" in mess_text:
         sr = mess_text.split()[1:]
         try:
-            response = requests.get(f"https://api.giphy.com/v1/gifs/translate?api_key=fX696cWgpdnP5QKFwwn0ZlFQeEE3977g&s={sr}")
+            response = requests.get(f"https://api.giphy.com/v1/gifs/translate?api_key="
+                                    f"fX696cWgpdnP5QKFwwn0ZlFQeEE3977g&s={sr}")
             v = response.json()
             mess = v["data"]['url']
             bot.send_message(message.chat.id, mess, parse_mode="html")
@@ -77,4 +95,3 @@ def get_user_photo(message):
 
 
 bot.polling(none_stop=True)
-
