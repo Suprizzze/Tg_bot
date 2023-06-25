@@ -2,6 +2,7 @@ import telebot
 import requests
 import random
 from telebot import types
+from config import bot
 
 answer = ["Все хорошо", "да отлично", "Превосходно", "пойдет, у тебя как?", "нормально, спасибо"]
 answer1 = ["ничего нового", "все новое", "да ничего, а у тебя что нового ?",
@@ -9,8 +10,6 @@ answer1 = ["ничего нового", "все новое", "да ничего,
 answer2 = ["Вуау, красотка", "ммм как будто дьявол смотрит прямо в душу, ужас!", "на тебя похож!",
            "пощади!!! не хотел я это увидеть", "100 из 10 реально красиво", "приятно что в мире "
                                                                             "есть такие прекрасные люди"]
-
-bot = telebot.TeleBot("6092242945:AAFRtkToIqntJbOR43179uw4KkmeOJqhCAg")
 
 markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
 start = types.KeyboardButton("/help")
